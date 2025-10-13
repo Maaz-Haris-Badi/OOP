@@ -11,9 +11,9 @@
  * and comparison operators for very large numbers that exceed the limits
  * of built-in integer types.
  */
-class BigNum {
+class BigNum
+{
 public:
-
     /**
      * @brief Default constructor. Initializes the number to "0".
      */
@@ -23,13 +23,13 @@ public:
      * @brief Copy constructor.
      * @param bigNum The BigNum instance to copy.
      */
-    BigNum(const BigNum& bigNum);
+    BigNum(const BigNum &bigNum);
 
     /**
      * @brief Constructs a BigNum from a string.
      * @param bigStr A string containing digits (e.g., "348723482").
      */
-    BigNum(const std::string& bigStr);
+    BigNum(const std::string &bigStr);
 
     /**
      * @brief Constructs a BigNum from an integer.
@@ -67,13 +67,13 @@ public:
      * Clears the current value before reading.
      * Uses clear() internally.
      */
-    void inputFromFile(const std::string& fileName);
+    void inputFromFile(const std::string &fileName);
 
     /**
      * @brief Writes the number to a file.
      * @param fileName Name of the file to write to.
      */
-    void printToFile(const std::string& fileName);
+    void printToFile(const std::string &fileName);
 
     // ===== Initialization/Assignment Operations =====
 
@@ -81,13 +81,13 @@ public:
      * @brief Copies the value from another BigNum.
      * @param bigNum The source BigNum.
      */
-    void copy(const BigNum& bigNum);
+    void copy(const BigNum &bigNum);
 
     /**
      * @brief Assignment operator overload.
      * @param bigNum The source BigNum.
      */
-    void operator=(const BigNum& bigNum);
+    void operator=(const BigNum &bigNum);
 
     /**
      * @brief Resets the number to "0".
@@ -106,7 +106,7 @@ public:
      * @param bigNum The BigNum to add.
      * @return A new BigNum containing the sum.
      */
-    BigNum add(const BigNum& bigNum);
+    BigNum add(const BigNum &bigNum);
 
     /**
      * @brief Adds an integer to this BigNum.
@@ -119,7 +119,7 @@ public:
      * @brief Adds another BigNum to this BigNum in-place.
      * @param bigNum The BigNum to add.
      */
-    void compoundAdd(const BigNum& bigNum);
+    void compoundAdd(const BigNum &bigNum);
 
     /**
      * @brief Adds an integer to this BigNum in-place.
@@ -139,7 +139,7 @@ public:
      * @param bigNum The BigNum to subtract.
      * @return A new BigNum containing the difference.
      */
-    BigNum subtract(const BigNum& bigNum);
+    BigNum subtract(const BigNum &bigNum);
 
     /**
      * @brief Subtracts an integer from this BigNum.
@@ -152,7 +152,7 @@ public:
      * @brief Subtracts another BigNum from this BigNum in-place.
      * @param bigNum The BigNum to subtract.
      */
-    void compoundSubtract(const BigNum& bigNum);
+    void compoundSubtract(const BigNum &bigNum);
 
     /**
      * @brief Subtracts an integer from this BigNum in-place.
@@ -167,14 +167,14 @@ public:
      * @param bigNum The BigNum multiplier.
      * @return A new BigNum containing the product.
      */
-    BigNum multiply(const BigNum& bigNum);
+    BigNum multiply(const BigNum &bigNum);
 
     /**
      * @brief Performs integer division of this BigNum by another BigNum.
      * @param bigNum The divisor.
      * @return A new BigNum containing the quotient.
      */
-    BigNum div(const BigNum& bigNum);
+    BigNum div(const BigNum &bigNum);
 
     /**
      * @brief Computes the remainder when this BigNum is divided by another
@@ -182,7 +182,7 @@ public:
      * @param bigNum The divisor.
      * @return A new BigNum containing the remainder.
      */
-    BigNum mod(const BigNum& bigNum);
+    BigNum mod(const BigNum &bigNum);
 
     // ===== Comparison Operations =====
 
@@ -191,34 +191,36 @@ public:
      * @param bigNum The BigNum to compare.
      * @return True if equal, otherwise false.
      */
-    bool equals(const BigNum& bigNum);
+    bool equals(const BigNum &bigNum);
 
     /**
      * @brief Checks if two BigNums are not equal.
      * @param bigNum The BigNum to compare.
      * @return True if not equal, otherwise false.
      */
-    bool notEquals(const BigNum& bigNum);
+    bool notEquals(const BigNum &bigNum);
 
     /**
      * @brief Checks if this BigNum is less than another.
      * @param bigNum The BigNum to compare.
      * @return True if less than, otherwise false.
      */
-    bool lessThan(const BigNum& bigNum);
+    bool lessThan(const BigNum &bigNum);
 
     /**
      * @brief Checks if this BigNum is greater than another.
      * @param bigNum The BigNum to compare.
      * @return True if greater than, otherwise false.
      */
-    bool greaterThan(const BigNum& bigNum);
+    bool greaterThan(const BigNum &bigNum);
 
 private:
-
     // Internal representation of the number:
     // (e.g., vector<char>, dynamically allocated char*, or linked list).
     // No static arrays are allowed.
+
+    std::string digits;
+    bool isNegative = false;
 
     /**
      * @brief Clears the current stored number.
