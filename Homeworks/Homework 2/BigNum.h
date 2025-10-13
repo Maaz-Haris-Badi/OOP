@@ -11,36 +11,39 @@
  * and comparison operators for very large numbers that exceed the limits
  * of built-in integer types.
  */
-class BigNum
-{
+class BigNum {
 public:
+
     /**
      * @brief Default constructor. Initializes the number to "0".
      */
     BigNum();
-
+    //* Done
     /**
      * @brief Copy constructor.
      * @param bigNum The BigNum instance to copy.
      */
-    BigNum(const BigNum &bigNum);
 
+    BigNum(const BigNum &bigNum);
+    //* Done
     /**
      * @brief Constructs a BigNum from a string.
      * @param bigStr A string containing digits (e.g., "348723482").
      */
-    BigNum(const std::string &bigStr);
 
+    BigNum(const std::string &bigStr);
+    //* Done
     /**
      * @brief Constructs a BigNum from an integer.
      * @param num An integer value (e.g., 487234985).
      */
     BigNum(const int num);
-
+    //* Done
     /**
      * @brief Destructor. Frees any dynamically allocated memory.
      */
     ~BigNum();
+    //* Done
 
     // ===== Input/Output Operations =====
 
@@ -51,6 +54,7 @@ public:
      * Uses clear() internally.
      */
     void input();
+    //* Done
 
     /**
      * @brief Prints the number to standard output.
@@ -215,12 +219,13 @@ public:
     bool greaterThan(const BigNum &bigNum);
 
 private:
+
     // Internal representation of the number:
     // (e.g., vector<char>, dynamically allocated char*, or linked list).
     // No static arrays are allowed.
 
     std::string digits;
-    bool isNegative = false;
+    bool        isNegative = false;
 
     /**
      * @brief Clears the current stored number.
