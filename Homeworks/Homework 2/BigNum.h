@@ -14,6 +14,7 @@
 class BigNum {
 public:
 
+    void removeLeadingZeros();
     /**
      * @brief Default constructor. Initializes the number to "0".
      */
@@ -63,7 +64,7 @@ public:
      * (e.g., 12,345,678).
      */
     void print();
-
+    //*DONE
     /**
      * @brief Reads a number from a file.
      * @param fileName Name of the file to read from.
