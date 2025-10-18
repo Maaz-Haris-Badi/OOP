@@ -14,7 +14,6 @@
 class BigNum {
 public:
 
-    void removeLeadingZeros();
     /**
      * @brief Default constructor. Initializes the number to "0".
      */
@@ -226,7 +225,7 @@ private:
     // No static arrays are allowed.
 
     std::string digits;
-    bool        isNegative = false;
+    bool        is_negative = false;
 
     /**
      * @brief Clears the current stored number.
