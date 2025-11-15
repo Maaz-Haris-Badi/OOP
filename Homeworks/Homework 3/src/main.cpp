@@ -1,15 +1,18 @@
 #include <iostream>
 
-#include "src/MatrixAlgebraSystem.hpp"
+#include "MatrixAlgebraSystem.hpp"
 
-std::ostream& operator<<(std::ostream&, const Matrix&);  // for printing purposes
+std::ostream& operator<<(std::ostream&,
+                         const Matrix&);  // for printing purposes
 
 int main() {
-    Matrix* M = new Matrix(2, 3);              // a 2x3 matrix
-    Matrix* S = new SquareMatrix(2);           // a 2x2 square matrix
-    Matrix* D = new DiagonalMatrix(2);         // a 2x2 diagonal matrix
-    Matrix* L = new LowerTriangularMatrix(2);  // a 2x2 lower triangular matrix
-    Matrix* U = new UpperTriangularMatrix(2);  // a 2x2 upper triangular matrix
+    Matrix* M = new Matrix(2, 3);     // a 2x3 matrix
+    Matrix* S = new SquareMatrix(2);  // a 2x2 square matrix
+    // Matrix* D = new DiagonalMatrix(2);         // a 2x2 diagonal matrix
+    Matrix* L = new LowerTriangularMatrix(2);  // a 2x2 lower triangular
+    // matrix
+    // Matrix* U = new UpperTriangularMatrix(2);  // a 2x2 upper
+    // triangular matrix
 
     // Initialize the matrices using setElement
     ///         0   1   2
@@ -35,9 +38,9 @@ int main() {
     ///         0   1
     /// D = | 1.0 0.0 | 0
     ///     | 0.0 2.0 | 1
-    D->setElement(0, 0, 1.0);
-    D->setElement(1, 1, 2.0);
-    std::cout << "D = " << std::endl << *D << std::endl;
+    // D->setElement(0, 0, 1.0);
+    // D->setElement(1, 1, 2.0);
+    // std::cout << "D = " << std::endl << *D << std::endl;
 
     ///         0   1
     /// L = | 1.0 0.0 | 0
@@ -47,23 +50,23 @@ int main() {
     L->setElement(1, 1, 3.0);
     std::cout << "L = " << std::endl << *L << std::endl;
 
-    ///         0   1
-    /// U = | 1.0 2.0 | 0
-    ///     | 0.0 3.0 | 1
-    U->setElement(0, 0, 1.0);
-    U->setElement(0, 1, 2.0);
-    U->setElement(1, 1, 3.0);
-    std::cout << "U = " << std::endl << *U << std::endl;
+    // ///         0   1
+    // /// U = | 1.0 2.0 | 0
+    // ///     | 0.0 3.0 | 1
+    // U->setElement(0, 0, 1.0);
+    // U->setElement(0, 1, 2.0);
+    // U->setElement(1, 1, 3.0);
+    // std::cout << "U = " << std::endl << *U << std::endl;
 
-    const Matrix S_plus_D = *S + *D;
-    std::cout << "S = " << std::endl << *S << std::endl;
-    std::cout << "D = " << std::endl << *D << std::endl;
-    std::cout << "S + D = " << std::endl << S_plus_D << std::endl;
+    // const Matrix S_plus_D = *S + *D;
+    // std::cout << "S = " << std::endl << *S << std::endl;
+    // std::cout << "D = " << std::endl << *D << std::endl;
+    // std::cout << "S + D = " << std::endl << S_plus_D << std::endl;
 
-    const Matrix L_minus_U = *L - *U;
-    std::cout << "L = " << std::endl << *L << std::endl;
-    std::cout << "U = " << std::endl << *U << std::endl;
-    std::cout << "L - U = " << std::endl << L_minus_U << std::endl;
+    // const Matrix L_minus_U = *L - *U;
+    // std::cout << "L = " << std::endl << *L << std::endl;
+    // std::cout << "U = " << std::endl << *U << std::endl;
+    // std::cout << "L - U = " << std::endl << L_minus_U << std::endl;
 
     return 0;
 }
