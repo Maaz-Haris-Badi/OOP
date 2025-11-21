@@ -2,6 +2,10 @@
 
 #include <iostream>
 
+///* This code is written by Maaz Haris, mh09633 of section L3/T3, taught by Dr.
+//* Zubair Irshad and this homework will be checked by RA Muhammad Meesum Ali
+//* Qazalbash
+
 Matrix::Matrix(const int rows, const int cols)
     : rows(rows), cols(cols), elements(rows * cols, 0.0) {}
 
@@ -24,41 +28,44 @@ int Matrix::getElementsSize() const { return elements.size(); }
 
 Matrix Matrix::operator+(const Matrix& other) const {
     if (rows != other.rows || cols != other.cols) {
-        throw std::invalid_argument(
-            "Matrix dimensions must agree for addition.");
+        return Matrix(0, 0);
     }
 
     Matrix result(rows, cols);
-    for (int i = 0; i < rows * cols; ++i) {
-        result.elements[i] = elements[i] + other.elements[i];
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            result.setElement(i, j,
+                              this->getElement(i, j) + other.getElement(i, j));
+        }
     }
     return result;
 }
 
 Matrix Matrix::operator-(const Matrix& other) const {
     if (rows != other.rows || cols != other.cols) {
-        throw std::invalid_argument(
-            "Matrix dimensions must agree for subtraction.");
+        return Matrix(0, 0);
     }
 
     Matrix result(rows, cols);
-    for (int i = 0; i < rows * cols; ++i) {
-        result.elements[i] = elements[i] - other.elements[i];
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            result.setElement(i, j,
+                              this->getElement(i, j) - other.getElement(i, j));
+        }
     }
     return result;
 }
 
 Matrix Matrix::operator*(const Matrix& other) const {
     if (cols != other.rows) {
-        throw std::invalid_argument(
-            "Matrix dimensions must agree for multiplication.");
+        return Matrix(0, 0);
     }
 
     Matrix result(rows, other.cols);
-    for (int i = 0; i < rows; ++i) {
-        for (int j = 0; j < other.cols; ++j) {
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < other.cols; j++) {
             double sum = 0.0;
-            for (int k = 0; k < cols; ++k) {
+            for (int k = 0; k < cols; k++) {
                 sum += getElement(i, k) * other.getElement(k, j);
             }
             result.setElement(i, j, sum);
@@ -72,9 +79,11 @@ bool Matrix::operator==(const Matrix& other) const {
         return false;
     }
 
-    for (int i = 0; i < rows * cols; ++i) {
-        if (elements[i] != other.elements[i]) {
-            return false;
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            if (this->getElement(i, j) != other.getElement(i, j)) {
+                return false;
+            }
         }
     }
     return true;

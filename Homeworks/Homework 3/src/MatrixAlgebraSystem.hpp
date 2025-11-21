@@ -1,7 +1,6 @@
 #ifndef __MATRIX_ALGEBRA_SYSTEM_H
 #define __MATRIX_ALGEBRA_SYSTEM_H
 
-// #include "DiagonalMatrix.hpp"
 #include "DiagonalMatrix.hpp"
 #include "LowerTriangularMatrix.hpp"
 #include "Matrix.hpp"

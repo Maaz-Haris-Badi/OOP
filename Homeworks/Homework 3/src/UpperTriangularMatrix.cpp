@@ -2,41 +2,58 @@
 
 #include <iostream>
 
-//* This code is written by Maaz Haris (mh09633) taught by Dr. Zuabiar Irshad
-//* and RA is Mesum Qazalbash
+//* This code is written by Maaz Haris, mh09633 of section L3/T3, taught by Dr.
+//* Zubair Irshad and this homework will be checked by RA Muhammad Meesum Ali
+//* Qazalbash
 
 UpperTriangularMatrix::UpperTriangularMatrix(const int size)
-    : SquareMatrix(size) {}
+    : SquareMatrix(size) {
+    if (size > 0) {
+        int numElements = size * (size + 1) / 2;
+        elements.resize(numElements, 0.0);
+    }
+}
 
 UpperTriangularMatrix::UpperTriangularMatrix(const UpperTriangularMatrix& other)
-    : SquareMatrix(other) {}
+    : SquareMatrix(other) {
+    rows     = other.rows;
+    cols     = other.cols;
+    elements = other.elements;
+}
 
 double UpperTriangularMatrix::getElement(const int row, const int col) const {
-    return SquareMatrix::getElement(row, col);
+    if (row < 0 || row >= rows || col < 0 || col >= cols) {
+        return 0.0;
+    }
+    if (row > col) {
+        return 0.0;
+    }
+    int index = cols * row + col - (row * (row + 1) / 2);
+    return elements[index];
 }
 
 void UpperTriangularMatrix::setElement(const int row, const int col,
                                        const double value) {
-    if (col < row && value != 0) {
-        throw std::invalid_argument(
-            "Cannot set non-zero value below main diagonal in Upper "
-            "Triangular Matrix.");
+    if (row < 0 || row >= rows || col < 0 || col >= cols) {
+        return;
     }
-    SquareMatrix::setElement(row, col, value);
+    if (row > col) {
+        return;
+    }
+    int index       = cols * row + col - (row * (row + 1) / 2);
+    elements[index] = value;
 }
 
 UpperTriangularMatrix UpperTriangularMatrix::operator+(
     const UpperTriangularMatrix& other) const {
     if (rows != other.rows || cols != other.cols) {
-        throw std::invalid_argument(
-            "Matrix dimensions must agree for addition.");
+        return UpperTriangularMatrix(0);
     }
 
     UpperTriangularMatrix result(rows);
-
-    for (int i = 0; i < rows; ++i) {
-        for (int j = i; j < cols; ++j) {
-            double sum = getElement(i, j) + other.getElement(i, j);
+    for (int i = 0; i < rows; i++) {
+        for (int j = i; j < cols; j++) {
+            double sum = this->getElement(i, j) + other.getElement(i, j);
             result.setElement(i, j, sum);
         }
     }
@@ -46,15 +63,13 @@ UpperTriangularMatrix UpperTriangularMatrix::operator+(
 UpperTriangularMatrix UpperTriangularMatrix::operator-(
     const UpperTriangularMatrix& other) const {
     if (rows != other.rows || cols != other.cols) {
-        throw std::invalid_argument(
-            "Matrix dimensions must agree for subtraction.");
+        return UpperTriangularMatrix(0);
     }
 
     UpperTriangularMatrix result(rows);
-
-    for (int i = 0; i < rows; ++i) {
-        for (int j = i; j < cols; ++j) {
-            double diff = getElement(i, j) - other.getElement(i, j);
+    for (int i = 0; i < rows; i++) {
+        for (int j = i; j < cols; j++) {
+            double diff = this->getElement(i, j) - other.getElement(i, j);
             result.setElement(i, j, diff);
         }
     }
@@ -64,16 +79,14 @@ UpperTriangularMatrix UpperTriangularMatrix::operator-(
 UpperTriangularMatrix UpperTriangularMatrix::operator*(
     const UpperTriangularMatrix& other) const {
     if (rows != other.rows || cols != other.cols) {
-        throw std::invalid_argument(
-            "Matrix dimensions must agree for multiplication.");
+        return UpperTriangularMatrix(0);
     }
 
     UpperTriangularMatrix result(rows);
-
-    for (int i = 0; i < rows; ++i) {
-        for (int j = i; j < cols; ++j) {
+    for (int i = 0; i < rows; i++) {
+        for (int j = i; j < cols; j++) {
             double sum = 0.0;
-            for (int k = i; k <= j; ++k) {
+            for (int k = i; k <= j; k++) {
                 sum += getElement(i, k) * other.getElement(k, j);
             }
             result.setElement(i, j, sum);
@@ -84,5 +97,8 @@ UpperTriangularMatrix UpperTriangularMatrix::operator*(
 
 bool UpperTriangularMatrix::operator==(
     const UpperTriangularMatrix& other) const {
-    return SquareMatrix::operator==(other);
+    if (rows != other.rows || cols != other.cols) {
+        return false;
+    }
+    return elements == other.elements;
 }

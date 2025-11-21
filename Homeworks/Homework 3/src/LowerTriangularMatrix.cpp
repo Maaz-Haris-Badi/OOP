@@ -2,40 +2,58 @@
 
 #include <iostream>
 
-//* This code is written by Maaz Haris (mh09633) taught by Dr. Zuabiar Irshad
-//* and RA is Mesum Qazalbash
+//* This code is written by Maaz Haris, mh09633 of section L3/T3, taught by Dr.
+//* Zubair Irshad and this homework will be checked by RA Muhammad Meesum Ali
+//* Qazalbash
 
 LowerTriangularMatrix::LowerTriangularMatrix(const int size)
-    : SquareMatrix(size) {}
+    : SquareMatrix(size) {
+    if (size > 0) {
+        int numElements = size * (size + 1) / 2;
+        elements.resize(numElements, 0.0);
+    }
+}
 
 LowerTriangularMatrix::LowerTriangularMatrix(const LowerTriangularMatrix& other)
-    : SquareMatrix(other) {}
+    : SquareMatrix(other) {
+    rows     = other.rows;
+    cols     = other.cols;
+    elements = other.elements;
+}
 
 double LowerTriangularMatrix::getElement(const int row, const int col) const {
-    return SquareMatrix::getElement(row, col);
+    if (row < 0 || row >= rows || col < 0 || col >= cols) {
+        return 0.0;
+    }
+    if (col > row) {
+        return 0.0;
+    }
+    int index = (row * (row + 1) / 2) + col;
+    return elements[index];
 }
 
 void LowerTriangularMatrix::setElement(const int row, const int col,
                                        const double value) {
-    if (col > row && value != 0) {
-        throw std::invalid_argument(
-            "Cannot set non-zero value above main diagonal in Lower "
-            "Triangular Matrix.");
+    if (row < 0 || row >= rows || col < 0 || col >= cols) {
+        return;
     }
-    SquareMatrix::setElement(row, col, value);
+    if (col > row) {
+        return;
+    }
+    int index       = (row * (row + 1) / 2) + col;
+    elements[index] = value;
 }
 
 LowerTriangularMatrix LowerTriangularMatrix::operator+(
     const LowerTriangularMatrix& other) const {
     if (rows != other.rows || cols != other.cols) {
-        throw std::invalid_argument(
-            "Matrix dimensions must agree for addition.");
+        return LowerTriangularMatrix(0);
     }
 
     LowerTriangularMatrix result(rows);
-    for (int i = 0; i < rows; ++i) {
-        for (int j = 0; j <= i; ++j) {
-            double sum = getElement(i, j) + other.getElement(i, j);
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j <= i; j++) {
+            double sum = this->getElement(i, j) + other.getElement(i, j);
             result.setElement(i, j, sum);
         }
     }
@@ -45,14 +63,13 @@ LowerTriangularMatrix LowerTriangularMatrix::operator+(
 LowerTriangularMatrix LowerTriangularMatrix::operator-(
     const LowerTriangularMatrix& other) const {
     if (rows != other.rows || cols != other.cols) {
-        throw std::invalid_argument(
-            "Matrix dimensions must agree for subtraction.");
+        return LowerTriangularMatrix(0);
     }
 
     LowerTriangularMatrix result(rows);
-    for (int i = 0; i < rows; ++i) {
-        for (int j = 0; j <= i; ++j) {
-            double diff = getElement(i, j) - other.getElement(i, j);
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j <= i; j++) {
+            double diff = this->getElement(i, j) - other.getElement(i, j);
             result.setElement(i, j, diff);
         }
     }
@@ -62,15 +79,14 @@ LowerTriangularMatrix LowerTriangularMatrix::operator-(
 LowerTriangularMatrix LowerTriangularMatrix::operator*(
     const LowerTriangularMatrix& other) const {
     if (rows != other.rows || cols != other.cols) {
-        throw std::invalid_argument(
-            "Matrix dimensions must agree for multiplication.");
+        return LowerTriangularMatrix(0);
     }
 
     LowerTriangularMatrix result(rows);
-    for (int i = 0; i < rows; ++i) {
-        for (int j = 0; j <= i; ++j) {
-            double sum = 0;
-            for (int k = j; k <= i; ++k) {
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j <= i; j++) {
+            double sum = 0.0;
+            for (int k = j; k <= i; k++) {
                 sum += getElement(i, k) * other.getElement(k, j);
             }
             result.setElement(i, j, sum);
@@ -81,5 +97,8 @@ LowerTriangularMatrix LowerTriangularMatrix::operator*(
 
 bool LowerTriangularMatrix::operator==(
     const LowerTriangularMatrix& other) const {
-    return SquareMatrix::operator==(other);
+    if (rows != other.rows || cols != other.cols) {
+        return false;
+    }
+    return elements == other.elements;
 }
